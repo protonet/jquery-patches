@@ -58,25 +58,26 @@ if (window.XDomainRequest) {
 var _super = $.ajaxSettings.xhr,
     defaultHeaders = ["Cache-Control", "Content-Language", "Content-Type", "Expires", "Last-Modified", "Pragma"];
 $.ajaxSetup({
-    xhr: function() {
-      var xhr = _super();
-      var getAllResponseHeaders = xhr.getAllResponseHeaders;
-      
-      xhr.getAllResponseHeaders = function() {
-        var allHeaders = getAllResponseHeaders.call(xhr);
-        if (allHeaders) {
-          return allHeaders;
-        }
-        allHeaders = "";
-        $.each(defaultHeaders, function(i, headerName) {
-            if (xhr.getResponseHeader(headerName)) {
-                allHeaders += headerName + ": " + xhr.getResponseHeader(headerName) + "\n";
-            }
-        });
+  xhr: function() {
+    var xhr = _super(),
+        getAllResponseHeaders = xhr.getAllResponseHeaders;
+    
+    xhr.getAllResponseHeaders = function() {
+      var allHeaders = getAllResponseHeaders.call(xhr);
+      if (allHeaders) {
         return allHeaders;
-      };
-      return xhr;
-    }
+      }
+      allHeaders = "";
+      $.each(defaultHeaders, function(i, headerName) {
+        var headerValue = xhr.getResponseHeader(headerName);
+        if (headerValue) {
+          allHeaders += headerName + ": " + headerValue + "\n";
+        }
+      });
+      return allHeaders;
+    };
+    return xhr;
+  }
 });
 
 })(jQuery);
