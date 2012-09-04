@@ -1,4 +1,4 @@
-h2. Monkey patches for jQuery needed for the Protonet project
+h2. jQuery monkey patches needed for the Protonet project
 
 Includes:
 * Cross domain XHR for IE 8+
