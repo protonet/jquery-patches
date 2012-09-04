@@ -25,14 +25,11 @@ asyncTest("multiple dblclick events are executed (in order and bubble)", functio
       $("body, html").off("dblclick");
       
       // Simulate double click by triggering double tap
+      $("body").trigger("touchend");
       setTimeout(function() {
         $("body").trigger("touchend");
-        setTimeout(function() {
-          $("body").trigger("touchend");
-          start();
-        }, 100);
+        start();
       }, 100);
-      
     }, 100);
   }, 100);
 });
