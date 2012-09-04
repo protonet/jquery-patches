@@ -6,10 +6,11 @@
   // add the state property for use with the native 'popstate' event
   $.event.props.push("state");
   
-  var agent = navigator.userAgent.toLowerCase(),
-      isiOS = agent.indexOf("iphone") !== -1 || agent.indexOf("ipad") !== -1 || agent.indexOf('ipod') !== -1;
+  var isTouchDevice = "ontouchstart" in window;
   
-  if (isiOS) {
+  // Most touch devices do not support the dblclick event
+  // This is a polyfill which simulates the behavior
+  if (isTouchDevice) {
     $.event.special.dblclick = {
       setup: function(data) {
         $.event.add(this, "touchend._dblclick", function(event) {
