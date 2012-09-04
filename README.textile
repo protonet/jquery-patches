@@ -1,0 +1,7 @@
+h2. Monkey patches for jQuery needed for the Protonet project
+
+Includes:
+* Cross domain XHR for IE 8+
+* Cross domain fixes for "getResponseHeader in Firefox":https://bugzilla.mozilla.org/show_bug.cgi?id=608735
+* Support for dblclick event on touch devices (iOS, Android, ...)
+* Add the state and dataTransfer properties to the event object
