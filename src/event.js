@@ -13,10 +13,12 @@
   if (isTouchDevice) {
     $.event.special.dblclick = {
       setup: function(data) {
+        var that = this;
         $.event.add(this, "touchend._dblclick", function(event) {
-          var now       = new Date().getTime(),
-              lastTouch = $.data(event.target, "lastTouch") || now + 1, // the first time this will make delta a negative number
+          var now       = +new Date(),
+              lastTouch = $.data(that, "lastTouch") || now + 1, // the first time this will make delta a negative number
               delta     = now - lastTouch;
+          
           if (delta < 500 && delta > 0) {
             $.event.simulate("dblclick", event.target, event, true);
           } else {
