@@ -24,7 +24,7 @@
           } else {
             $.event.simulate("mousedown", event.target, event, true);
           }
-          $.data(event.target, "lastTouch", now);
+          $.data(that, "lastTouch", now);
         });
       },
 
