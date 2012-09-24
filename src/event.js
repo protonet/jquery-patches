@@ -8,28 +8,30 @@
   
   var isTouchDevice = "ontouchstart" in window;
   
+  var special = $.event.special;
+  
   // Most touch devices do not support the dblclick event
   // This is a polyfill which simulates the behavior
   if (isTouchDevice) {
-    $.event.special.dblclick = {
-      setup: function(data) {
-        var that = this;
-        $.event.add(this, "touchend._dblclick", function(event) {
-          var now       = +new Date(),
-              lastTouch = $.data(that, "lastTouch") || now + 1, // the first time this will make delta a negative number
-              delta     = now - lastTouch;
-          
-          if (delta < 500 && delta > 0) {
-            $.event.simulate("dblclick", event.target, event, true);
-          } else {
-            $.event.simulate("mousedown", event.target, event, true);
-          }
-          $.data(that, "lastTouch", now);
-        });
+    special.dblclick = {
+      setup: function() {
+        $(this).on("touchend.dblclick", special.dblclick.handler);
       },
 
-      remove: function(data) {
-        $.event.remove(this, "._dblclick");
+      teardown: function() {
+        $(this).off("touchend.dblclick", special.dblclick.handler);
+      },
+
+      handler: function(event) {
+        var $element  = $(event.target),
+            lastTouch = $element.data("lastTouch") || 0,
+            now       = +new Date(),
+            delta     = now - lastTouch;
+        if (delta > 20 && delta < 500) {
+          $element.data("lastTouch", 0).trigger("dblclick");
+        } else {
+          $element.data("lastTouch", now);
+        }
       }
     };
   }

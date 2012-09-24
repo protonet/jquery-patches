@@ -4,15 +4,15 @@ asyncTest("multiple dblclick events are executed (in order and bubble)", functio
   expect(3);
   
   $("body").on("dblclick", function() {
-    ok(true);
+    ok(true, 1);
   });
   
   $("body").on("dblclick", function() {
-    ok(true);
+    ok(true, 2);
   });
   
   $("html").on("dblclick", function() {
-    ok(true);
+    ok(true, 3);
   });
   
   // Simulate double click by triggering double tap
