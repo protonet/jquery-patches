@@ -29,6 +29,7 @@
             delta     = now - lastTouch;
         if (delta > 20 && delta < 500) {
           $element.data("lastTouch", 0).trigger("dblclick");
+          event.preventDefault();
         } else {
           $element.data("lastTouch", now);
         }
